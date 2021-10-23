@@ -41,6 +41,14 @@ public class PlayerAI extends CreatureAI {
         }
     }
 
+    public int x(){
+        return creature.x();
+    }
+
+    public int y(){
+        return creature.y();
+    }
+
     public void onNotify(String message) {
         this.messages.add(message);
     }

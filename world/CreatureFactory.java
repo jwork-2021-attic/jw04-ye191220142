@@ -40,10 +40,40 @@ public class CreatureFactory {
         return player;
     }
 
+    public Creature newPlayerAtLocation(List<String> messages, int x, int y){
+        Creature player = new Creature(this.world, (char)2, AsciiPanel.brightWhite, 100, 20, 5, 9);
+        world.addAtLocation(player, x, y);
+        new PlayerAI(player, messages);
+        return player;
+    }
+
     public Creature newFungus() {
         Creature fungus = new Creature(this.world, (char)3, AsciiPanel.green, 10, 0, 0, 0);
         world.addAtEmptyLocation(fungus);
         new FungusAI(fungus, this);
         return fungus;
+    }
+
+    public void newArrow(int direct, int x, int y){
+        Creature arrow = null;
+        switch(direct) {
+            case 0: //up
+                arrow = new Creature(this.world, (char)24, AsciiPanel.green, 1, 0, 0, 0);
+                break;
+            case 1: //down
+                arrow = new Creature(this.world, (char)25, AsciiPanel.green, 1, 0, 0, 0);
+                break;
+            case 2: //right
+                arrow = new Creature(this.world, (char)26, AsciiPanel.green, 1, 0, 0, 0);
+                break;
+            case 3: //left
+                arrow = new Creature(this.world, (char)27, AsciiPanel.green, 1, 0, 0, 0);
+                break;
+            case 4: //回头路
+                arrow = new Creature(this.world, (char)42, AsciiPanel.red, 1, 0, 0, 0);
+                break;
+        }
+        world.addAtLocation(arrow, x ,y);
+        new ArrowAI(arrow);
     }
 }

@@ -122,6 +122,9 @@ public class Creature {
             ai.onEnter(x + mx, y + my, world.tile(x + mx, y + my));
         } else {
             attack(other);
+            if(world.creature(x + mx, y + my) == null) {
+                ai.onEnter(x + mx, y + my, world.tile(x + mx, y + my));
+            }
         }
     }
 
