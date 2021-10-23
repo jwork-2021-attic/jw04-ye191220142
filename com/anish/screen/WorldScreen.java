@@ -5,24 +5,24 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 //import com.anish.calabashbros.BubbleSorter;
-import com.anish.calabashbros.SelectSorter;
-import com.anish.calabashbros.Monster;
-import com.anish.calabashbros.World;
-import com.anish.calabashbros.getRgb;
-import com.anish.calabashbros.getRandom;
+import com.anish.monstermatrix.SelectSorter;
+import com.anish.monstermatrix.Monster;
+import com.anish.monstermatrix.World;
+import com.anish.monstermatrix.getRgb;
+import com.anish.monstermatrix.getRandom;
 
 import asciiPanel.AsciiPanel;
 
 public class WorldScreen implements Screen {
 
     private World world;
-    private Monster[][] bros;
+    private Monster[][] matrix;
     String[] sortSteps;
 
     public WorldScreen() throws IOException{
         world = new World();
 
-        bros = new Monster[16][16];
+        matrix = new Monster[16][16];
 
         getRgb rgb = new getRgb();
         rgb.setRgb();
@@ -39,13 +39,13 @@ public class WorldScreen implements Screen {
 
         for(int i = 0; i < 16; i++){
             for(int j = 0; j < 16; j++){
-                bros[i][j] = new Monster(new Color(colors[ranIndex[i*16+j]][0], colors[ranIndex[i*16+j]][1], colors[ranIndex[i*16+j]][2]), ranks[ranIndex[i*16+j]], world);
-                world.put(bros[i][j], i+7, j+5);
+                matrix[i][j] = new Monster(new Color(colors[ranIndex[i*16+j]][0], colors[ranIndex[i*16+j]][1], colors[ranIndex[i*16+j]][2]), ranks[ranIndex[i*16+j]], world);
+                world.put(matrix[i][j], i+7, j+5);
             }
         }
 
         SelectSorter<Monster> b = new SelectSorter<>();
-        b.load(bros);
+        b.load(matrix);
         b.sort();
 
         sortSteps = this.parsePlan(b.getPlan());
@@ -55,16 +55,16 @@ public class WorldScreen implements Screen {
         return plan.split("\n");
     }
 
-    private void execute(Monster[][] bros, String step) {
+    private void execute(Monster[][] matrix, String step) {
         String[] couple = step.split("<->");
-        getBroByRank(bros, Integer.parseInt(couple[0])).swap(getBroByRank(bros, Integer.parseInt(couple[1])));
+        getBroByRank(matrix, Integer.parseInt(couple[0])).swap(getBroByRank(matrix, Integer.parseInt(couple[1])));
     }
 
-    private Monster getBroByRank(Monster[][] bros, int rank) {
-        for (Monster[] line : bros) {
-            for(Monster bro : line){
-                if (bro.getRank() == rank) {
-                    return bro;
+    private Monster getBroByRank(Monster[][] matrix, int rank) {
+        for (Monster[] line : matrix) {
+            for(Monster one : line){
+                if (one.getRank() == rank) {
+                    return one;
                 }
             }
         }
@@ -89,7 +89,7 @@ public class WorldScreen implements Screen {
     public Screen respondToUserInput(KeyEvent key) {
 
         if (i < this.sortSteps.length) {
-            this.execute(bros, sortSteps[i]);
+            this.execute(matrix, sortSteps[i]);
             i++;
         }
 

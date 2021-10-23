@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import com.anish.calabashbros.World;
+import com.anish.monstermatrix.World;
 import com.anish.screen.Screen;
 import com.anish.screen.WorldScreen;
 
